@@ -10,3 +10,8 @@ runDeployScript="$DEPLOY_DEST"/../run-deploy.sh
 
 sudo chown root:root "$runDeployScript"
 sudo ln -s "$runDeployScript" /usr/local/sbin/run-deploy
+
+setupServiceScript="$DEPLOY_DEST"/../run-deploy.sh
+
+sudo chown root:root "$setupServiceScript"
+sudo ln -s "$setupServiceScript" /usr/local/sbin/setup-service
