@@ -36,6 +36,7 @@ function checkDir {
 
 repo="$1"
 
+# empty var produces bug
 [ -d "./$repo" ] && checkProceed "$repo exists. do you want to update configuration?"
 
 echo "Setting up $repo..."
