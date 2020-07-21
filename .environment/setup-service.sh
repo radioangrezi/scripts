@@ -5,33 +5,33 @@
 # other config files need to be symlinked in the respective folders manually
 
 function checkProceed {
-read -r -p "$1 [Y/n] " input
-case $input in
-    [yY][eE][sS]|[yY])
- ;;
-    [nN][oO]|[nN])
- echo "exiting..."
- exit 1
-       ;;
-    *)
- echo "Invalid input..."
- exit 1
- ;;
-esac
+  read -r -p "$1 [Y/n] " input
+  case $input in
+      [yY][eE][sS]|[yY])
+   ;;
+      [nN][oO]|[nN])
+   echo "exiting..."
+   exit 1
+         ;;
+      *)
+   echo "Invalid input..."
+   exit 1
+   ;;
+  esac
 }
 
 function checkDir {
-if [ ! -d $1 ]; then
-  echo $2
-  exit 1
-fi
-}
+  if [ ! -d $1 ]; then
+    echo $2
+    exit 1
+  fi
+  }
 
-function checkFile {
-if [ ! -f $1 ]; then
-  echo $2
-  exit 1
-fi
+  function checkFile {
+  if [ ! -f $1 ]; then
+    echo $2
+    exit 1
+  fi
 }
 
 repo="$1"
@@ -55,9 +55,9 @@ sudo cp -rf ./.temp/repo/.environment/. "./$repo/"
 # link service files
 shopt -s nullglob
 for file in $PWD/$repo/*.service ; do
-    echo "Registering service file ${file##*/}..."
-    ln -sf $file /etc/systemd/system/${file##*/}
-    sudo systemctl enable ${file##*/}
+  echo "Registering service file ${file##*/}..."
+  ln -sf $file /etc/systemd/system/${file##*/}
+  sudo systemctl enable ${file##*/}
 done
 sudo systemctl daemon-reload
 
