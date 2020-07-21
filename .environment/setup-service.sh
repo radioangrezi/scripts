@@ -21,15 +21,15 @@ function checkProceed {
 }
 
 function checkDir {
-  if [ ! -d $1 ]; then
-    echo $2
+  if [ ! -d "$1" ]; then
+    echo "$2"
     exit 1
   fi
   }
 
   function checkFile {
-  if [ ! -f $1 ]; then
-    echo $2
+  if [ ! -f "$1" ]; then
+    echo "$2"
     exit 1
   fi
 }
@@ -45,7 +45,7 @@ mkdir .temp
 
 #cloning repo into temp
 git clone --quiet "https://github.com/radioangrezi/$repo.git" ./.temp/repo
-mkdir -p $repo
+mkdir -p "$repo"
 
 checkDir "./.temp/repo/.environment/" ".environment folder does not exists in repository. exiting..."
 
@@ -54,10 +54,10 @@ sudo cp -rf ./.temp/repo/.environment/. "./$repo/"
 
 # link service files
 shopt -s nullglob
-for file in $PWD/$repo/*.service ; do
+for file in "$PWD"/"$repo"/*.service ; do
   echo "Registering service file ${file##*/}..."
-  ln -sf $file /etc/systemd/system/${file##*/}
-  sudo systemctl enable ${file##*/}
+  ln -sf "$file" /etc/systemd/system/"${file##*/}"
+  sudo systemctl enable "${file##*/}"
 done
 sudo systemctl daemon-reload
 
