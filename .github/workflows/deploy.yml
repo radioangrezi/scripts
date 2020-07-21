@@ -6,12 +6,8 @@ name: Update scripts on Angrezi Server
 on:
   push:
     branches: [ master ]
-    paths-ignore:
-    - '.environment/**'
   pull_request:
     branches: [ master ]
-    paths-ignore:
-    - '.environment/**'
 
 jobs:
   deploy:
