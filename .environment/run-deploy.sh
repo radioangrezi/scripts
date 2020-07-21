@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 repoDir=$1
 expectedParentDir="/opt/services/"
