@@ -43,8 +43,8 @@ serviceDir=/opt/services/"$repo"
 
 echo "Setting up $repo..."
 
+mkdir -p /tmp/setup-service
 sudo rm -rf "$tempDir"
-mkdir "$tempDir"
 
 #cloning repo into temp
 git clone --quiet "https://github.com/radioangrezi/$repo.git" "$tempDir"
