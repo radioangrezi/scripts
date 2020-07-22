@@ -39,9 +39,9 @@ tempDir=/tmp/setup-service/repository
 serviceDir=/opt/services/"$repo"
 
 # empty var produces bug
-[ -d "./$repo" ] && checkProceed "$repo exists. do you want to update configuration?"
+[ -d "$serviceDir" ] && checkProceed "$repo exists. do you want to update configuration?"
 
-echo "Setting up $repo..."
+echo "Setting up "$serviceDir" ..."
 
 mkdir -p /tmp/setup-service
 sudo rm -rf "$tempDir"
