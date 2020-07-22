@@ -35,36 +35,40 @@ function checkDir {
 }
 
 repo="$1"
+tempDir=/tmp/setup-service/repository
+serviceDir=/opt/services/"$repo"
 
 # empty var produces bug
 [ -d "./$repo" ] && checkProceed "$repo exists. do you want to update configuration?"
 
 echo "Setting up $repo..."
 
-sudo rm -rf ./.temp
-mkdir .temp
+sudo rm -rf "$tempDir"
+mkdir "$tempDir"
 
 #cloning repo into temp
-git clone --quiet "https://github.com/radioangrezi/$repo.git" ./.temp/repo
-mkdir -p "$repo"
+git clone --quiet "https://github.com/radioangrezi/$repo.git" "$tempDir"
+mkdir -p "$serviceDir"
 
-checkDir "./.temp/repo/.environment/" ".environment folder does not exists in repository. exiting..."
+checkDir "$serviceDir"/.environment/ ".environment folder does not exists in repository. exiting..."
 
-sudo cp -rf ./.temp/repo/.environment/. "./$repo/"
-# cp -r ./.temp/repo/.environment/. ./angrezi-tusd-hooks/
+sudo cp -rf "$tempDir"/.environment/. "$serviceDir"/
 
 # link service files
 shopt -s nullglob
-for file in "$PWD"/"$repo"/*.service ; do
-  echo "Registering service file ${file##*/}..."
-  ln -sf "$file" /etc/systemd/system/"${file##*/}"
-  sudo systemctl enable "${file##*/}"
+for file in "$serviceDir"/*.service ; do
+  serviceFile="${file##*/}"
+  echo Registering service file "$serviceFile"...
+  ln -sf "$file" /etc/systemd/system/"$serviceFile"
+  sudo systemctl enable "$serviceFile"
 done
+
+# reload systemd daemon
 sudo systemctl daemon-reload
 
-checkFile "./$repo/deploy.sh" "no deploy script found. exiting..."
-sudo chown -R root:root "./$repo"
-sudo chmod -R 775 "./$repo"
+checkFile "$serviceDir"/deploy.sh "no deploy script found. exiting..."
+sudo chown -R root:root "$serviceDir"/deploy.sh
+sudo chmod -R 775 "$serviceDir"/deploy.sh
 
 # deploying manually once: build step is missing this makes no sense
 # export DEPLOY_REPO_NAME="$repo"
