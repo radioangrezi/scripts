@@ -4,16 +4,16 @@
 # accessible var DEPLOY_DEST
 # accessible var DEPLOY_FROM
 
-echo deploy!
+echo Symlinking scripts into /usr/local/sbin ...
 
-scriptDir=$(dirname "$0")
+thisDir=$(dirname "$0"/..)
 
-runDeployScript="$scriptDir"/run-deploy.sh
-sudo chown root:root "$runDeployScript"
-sudo cp -f "$runDeployScript" /usr/local/sbin/run-deploy
-sudo chmod +x /usr/local/sbin/run-deploy
 
-setupServiceScript="$scriptDir"/setup-service.sh
-sudo chown root:root "$setupServiceScript"
-sudo cp -f "$setupServiceScript" /usr/local/sbin/setup-service
-sudo chmod +x /usr/local/sbin/run-deploy
+shopt -s nullglob
+for file in "$thisDir"/*.sh ; do
+  scriptFile="${file##*/}"
+  echo symlinking script file "$serviceFile"...
+  [ ! -f "$file"] && ln -s "$file" /etc/systemd/system/"$serviceFile"
+  sudo chown root:root "$file"
+  sudo chmod +x "$file"
+done
