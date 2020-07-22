@@ -6,7 +6,7 @@
 
 echo deploy!
 
-$scriptDir="$(dirname $test)"
+scriptDir=$(dirname "$0")
 
 runDeployScript="$scriptDir"/run-deploy.sh
 sudo chown root:root "$runDeployScript"
