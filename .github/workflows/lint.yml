@@ -22,6 +22,3 @@ jobs:
         uses: azohra/shell-linter@latest
         with:
           path: ".environment"
-  
-      - name: Update scripts on Angrezi Server
-        run: sudo /opt/services/run-deploy.sh ${{ github.event.repository.name }}
