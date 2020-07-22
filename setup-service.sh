@@ -41,7 +41,7 @@ serviceDir=/opt/services/"$repo"
 # empty var produces bug
 [ -d "$serviceDir" ] && checkProceed "$repo exists. do you want to update configuration?"
 
-echo "Setting up "$serviceDir" ..."
+echo Setting up "$serviceDir" ...
 
 mkdir -p /tmp/setup-service
 sudo rm -rf "$tempDir"
