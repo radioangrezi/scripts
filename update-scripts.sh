@@ -9,6 +9,11 @@ echo Symlinking scripts into /usr/local/sbin ...
 scriptDir=/opt/scripts
 echo Running in "$scriptDir"
 
+echo "updating..."
+sudo git stash
+sudo git reset --hard HEAD
+sudo git pull
+
 shopt -s nullglob
 for file in "$scriptDir"/*.sh ; do
   scriptFile="$(basename "$file" .sh)"
