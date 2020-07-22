@@ -48,9 +48,10 @@ sudo rm -rf "$tempDir"
 
 #cloning repo into temp
 git clone --quiet "https://github.com/radioangrezi/$repo.git" "$tempDir"
-mkdir -p "$serviceDir"
 
 checkDir "$tempDir"/.environment/ ".environment folder does not exists in repository. exiting..."
+
+mkdir -p "$serviceDir"
 
 sudo cp -rf "$tempDir"/.environment/. "$serviceDir"/
 
