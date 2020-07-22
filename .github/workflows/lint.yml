@@ -20,5 +20,3 @@ jobs:
 
       - name: Lint Deploy Scripts
         uses: azohra/shell-linter@latest
-        with:
-          path: ".environment"
