@@ -10,6 +10,7 @@ scriptDir=/opt/scripts
 echo Running in "$scriptDir"
 
 echo "updating..."
+cd "$scriptDir"
 sudo git stash
 sudo git reset --hard HEAD
 sudo git pull
