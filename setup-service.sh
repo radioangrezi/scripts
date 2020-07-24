@@ -38,6 +38,9 @@ repo="$1"
 tempDir=/tmp/setup-service/repository
 serviceDir=/opt/services/"$repo"
 
+# exluding empty from shell expansion
+shopt -s nullglob
+
 # empty var produces bug
 [ -d "$serviceDir" ] && checkProceed "$repo exists. do you want to update configuration?"
 
@@ -56,7 +59,6 @@ mkdir -p "$serviceDir"
 sudo cp -rf "$tempDir"/.environment/. "$serviceDir"/
 
 # link service files
-shopt -s nullglob
 for file in "$serviceDir"/*.service ; do
   serviceFile="${file##*/}"
   echo Registering service file "$serviceFile"...
@@ -64,9 +66,19 @@ for file in "$serviceDir"/*.service ; do
   sudo systemctl enable "$serviceFile"
 done
 
+# link monit files
+for file in "$serviceDir"/*.monit-conf ; do
+  monitFile="$(basename "$file" .monit-conf)"
+  echo Registering monit config file "$monitFile".conf ...
+  ln -sf "$file" /etc/monit/conf-enabled/"$serviceFile".conf
+  sudo systemctl reload monit
+done
+
 # reload systemd daemon
+echo Reloading systemd daemon
 sudo systemctl daemon-reload
 
+echo Locking down permission of deploy script
 checkFile "$serviceDir"/deploy.sh "no deploy script found. exiting..."
 sudo chown -R root:root "$serviceDir"/deploy.sh
 sudo chmod -R 775 "$serviceDir"/deploy.sh
