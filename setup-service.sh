@@ -66,17 +66,19 @@ for file in "$serviceDir"/*.service ; do
   sudo systemctl enable "$serviceFile"
 done
 
+# reload systemd daemon
+echo Reloading systemd daemon...
+sudo systemctl daemon-reload
+
 # link monit files
 for file in "$serviceDir"/*.monit-conf ; do
   monitFile="$(basename "$file" .monit-conf)"
   echo Registering monit config file "$monitFile".conf ...
   ln -sf "$file" /etc/monit/conf-enabled/"$serviceFile".conf
-  sudo systemctl reload monit
 done
 
-# reload systemd daemon
-echo Reloading systemd daemon
-sudo systemctl daemon-reload
+echo Reloading monit daemon...
+sudo systemctl reload monit
 
 echo Locking down permission of deploy script
 checkFile "$serviceDir"/deploy.sh "no deploy script found. exiting..."
