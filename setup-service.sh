@@ -74,7 +74,7 @@ sudo systemctl daemon-reload
 for file in "$serviceDir"/*.monit-conf ; do
   monitFile="$(basename "$file" .monit-conf)"
   echo Registering monit config file "$monitFile".conf ...
-  ln -sf "$file" /etc/monit/conf-enabled/"$serviceFile".conf
+  ln -sf "$file" /etc/monit/conf-enabled/"$monitFile".conf
 done
 
 echo Reloading monit daemon...
