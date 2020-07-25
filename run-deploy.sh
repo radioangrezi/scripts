@@ -1,6 +1,6 @@
 #!/bin/bash
 
-repoDir=$1
+repoDir="$(basename $1)"
 expectedParentDir="/opt/services/"
 deployScript="/opt/services/$repoDir/deploy.sh"
 
