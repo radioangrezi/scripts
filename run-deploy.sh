@@ -9,7 +9,7 @@ function testDir() {
   if [[ ! -f $arg ]]
   then
       echo "no deployment script found."
-      echo "setup the service with: sudo setup-service $repoDir?"
+      echo "setup the service with: sudo setup-service $repoDir."
       exit 1
   fi
   rpath=$(realpath "$arg")
