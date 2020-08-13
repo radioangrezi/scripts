@@ -3,7 +3,7 @@
 
 file="${1}"
 airtime_conf_path=/etc/airtime/airtime.conf
-api_key=$(grep api_key ${airtime_conf_path} | awk '{print $3;}' )
+api_key=$(grep ^api_key ${airtime_conf_path} | awk '{print $3;}' )
 
 if [[ $file = *.wav ]];then
 	echo "convert to mp3"
