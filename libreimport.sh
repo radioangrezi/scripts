@@ -2,6 +2,8 @@
 
 
 file="${1}"
+airtime_conf_path=/etc/airtime/airtime.conf
+api_key=$(grep api_key ${airtime_conf_path} | awk '{print $3;}' )
 
 if [[ $file = *.wav ]];then
 	echo "convert to mp3"
@@ -24,7 +26,7 @@ import os
 import logging
 import urllib3
 pathname = "${file}"
-api_key = ""
+api_key = "${api_key}"
 url = 'http://studio.radioangrezi.de/rest/media'
 http = urllib3.PoolManager()
 with open (pathname, "rb") as audiofile:
